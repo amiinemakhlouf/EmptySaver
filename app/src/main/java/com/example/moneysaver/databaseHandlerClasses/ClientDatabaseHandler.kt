@@ -65,32 +65,46 @@ class DatabaseHandler(context: Context):SQLiteOpenHelper(context,
          val cursor =db.rawQuery(selectQuery,null)
 
          // values containrs
+         var id:Int
          var username:String
          var password:String
          var salary:Double
-         val limitSalary:Double
+         var expenseLimit:Double
          if (cursor.moveToFirst()){
 
              do{
-                 username=cursor.getString(cursor.getColumnIndex())
-             }
+                 id=cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                 username=cursor.getString(cursor.getColumnIndex(KEY_USERNAME))
+                 password=cursor.getString(cursor.getColumnIndex(KEY_PASSWORD))
+                 salary=cursor.getDouble(cursor.getColumnIndex(KEY_SAlARY))
+                 expenseLimit=cursor.getDouble(cursor.getColumnIndex(KEY_EXPENSE_LIMIT))
+                 val client=ClientModelClass(id,username,password,salary,expenseLimit  )
+                 clientArrayList.add(client)
+             }while (cursor.moveToNext())
          }
+         db.close()
+
+         return clientArrayList
+    }
+
+    fun updateClinet(client:ClientModelClass){
+
+        val db=writableDatabase
 
 
 
-
-     }
-
+        db.close()
 
 
+    }
+    fun deleteDatabase(client:ClientModelClass):Int{
 
+        val db=writableDatabase
+        val success=db.delete(TABLE_NAME, KEY_ID+"="+client.id,null)
+        db.close()
+        return success
 
-
-
-
-
-
-
+    }
 
 
 
