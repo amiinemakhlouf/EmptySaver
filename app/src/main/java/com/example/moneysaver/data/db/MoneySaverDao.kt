@@ -1,13 +1,13 @@
-package com.example.moneysaver.data
+package com.example.moneysaver.data.db
 
 import androidx.room.*
-import com.example.moneysaver.data.ClientModelClass
+import com.example.moneysaver.data.db.entities.ClientModelClass
 @Dao
 interface MoneySaverDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upset(item: ClientModelClass)
+    suspend fun upsert(item: ClientModelClass)
     @Delete
     suspend fun delete(item: ClientModelClass)
     @Query("SELECT * FROM Client")
-    fun  readAllItems(item: ClientModelClass)
+            fun  readAllClients()
 }

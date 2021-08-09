@@ -1,4 +1,4 @@
-package com.example.moneysaver.data
+package com.example.moneysaver.data.db.entities
 
 class ExpenseModelClass (
 
