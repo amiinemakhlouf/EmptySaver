@@ -27,21 +27,47 @@ class SignUpActivity : AppCompatActivity() {
         val provider : ViewModelProvider = ViewModelProvider(this,factory)
         val viewModel = provider.get(ClientViewModel::class.java)
         binding.btSignUp.setOnClickListener {
-            if(isBlanck(binding.etPAssword)||isBlanck(binding.etSalary)||isBlanck(binding.etUsername)||isBlanck(binding.etExpenseLimit))
+            if(isBlanck(binding.etPAssword)||isBlanck(binding.etSalary)||isBlanck(binding.etUsername)||
+                    isBlanck(binding.etExpenseLimit))
                 Toast.makeText(this," please enter all your information ",Toast.LENGTH_SHORT).show()
             else{
+                  if(!(passwordIsValid(binding.etPAssword)))
+                  {
+                      binding.etPAssword.error="password must contain letters , numbers and at least 8 characters"
+                     // binding.etPAssword.text!!.clear()
+
+                  }
+                  else{
+                          if (binding.etExpenseLimit.text.toString().toDouble()>binding.etSalary.text.toString().toDouble())
+
+                              binding.etExpenseLimit.error=  "salary limit cannot be higher than salary "
+                          else {
                 val username=binding.etUsername
                 val password=binding.etPAssword
-                val salary=binding.etPAssword
+                val salary=binding.etSalary
                 val ExpenseLimit=binding.etExpenseLimit
                 val client= ClientModelClass(username = username.text.toString(),password =password.text.toString(),
                     salary=salary.text.toString().toDouble() ,ExpenseLimit.text.toString().toDouble())
                 viewModel.upsert(client)
+                Toast.makeText(this," account created successfully",Toast.LENGTH_SHORT).show()
 
-            }
-        }
+            } }
+        }}
 
     }
+    fun passwordIsValid(editText: EditText):Boolean{
+
+        // password must contain letters , numbers and at least 8 characters
+        val hasDigits:Boolean = editText.text.toString().any { it.isDigit() }
+        val hasLetters:Boolean=editText.text.toString().any { it.isLetter() }
+
+
+        return(hasDigits && hasLetters &&editText.text.toString().length>=8)
+
+
+
+    }
+
     fun isBlanck(editText: EditText):Boolean=editText.text.isBlank()
 
 
@@ -50,4 +76,3 @@ class SignUpActivity : AppCompatActivity() {
 
 }
 
-}

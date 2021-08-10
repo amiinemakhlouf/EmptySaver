@@ -11,8 +11,9 @@ data class ClientModelClass
     val username: String="",
     @ColumnInfo(name="password")
     val password: String="",
-    val salary: Double=0.0,
     @ColumnInfo(name="salary")
+    val salary: Double=0.0,
+    @ColumnInfo(name="expenseLimit")
     val expenseLimit: Double=0.0
      )
 {       @PrimaryKey(autoGenerate = true)
