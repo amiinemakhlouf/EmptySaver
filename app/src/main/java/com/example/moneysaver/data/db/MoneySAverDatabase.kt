@@ -9,7 +9,7 @@ import com.example.moneysaver.data.db.entities.ClientModelClass
 @Database(entities = [ClientModelClass::class],version = 1)
 abstract class MoneySAverDatabase:RoomDatabase() {
 
-    abstract fun getClientsItemsDao(): MoneySaverDao
+    abstract fun getMoneySaverDao(): MoneySaverDao
     companion object {
         @Volatile
         private var instance : MoneySAverDatabase?=null

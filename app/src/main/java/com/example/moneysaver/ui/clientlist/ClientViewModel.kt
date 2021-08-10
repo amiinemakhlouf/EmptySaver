@@ -2,15 +2,13 @@ package com.example.moneysaver.ui.clientlist
 
 import androidx.lifecycle.ViewModel
 import com.example.moneysaver.data.db.entities.ClientModelClass
-import com.example.moneysaver.repostories.MoneySaverMoneySaverRepository
+import com.example.moneysaver.repostories.MoneySaverRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 class ClientViewModel(
-    private  val repository: MoneySaverMoneySaverRepository
+    private  val repository: MoneySaverRepository
 ):ViewModel() {
     fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
         repository.uspert(item)}
