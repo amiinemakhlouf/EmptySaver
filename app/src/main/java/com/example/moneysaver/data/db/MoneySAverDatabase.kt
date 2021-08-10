@@ -12,6 +12,7 @@ abstract class MoneySAverDatabase:RoomDatabase() {
     abstract fun getMoneySaverDao(): MoneySaverDao
     companion object {
         @Volatile
+
         private var instance : MoneySAverDatabase?=null
         private  val LOCK = Any()
         operator  fun invoke(context: Context)= instance ?: synchronized(LOCK) {
