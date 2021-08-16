@@ -2,4 +2,24 @@
     <string name="app_name">MoneySAVER</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="salary_limit_error">salary limit cannot be higher than salary </string>
+    <string name="get_information">please enter all your information  </string>
+    <string name="password_constraints">password must contain letters , digits and at least 8 characters </string>
+    <string name="id">id</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="create_an_account">create an account</string>
+    <string name="salary">Salary</string>
+    <string name="limit_salary">limit salary</string>
+    <string name="expnses_limit">Expnses Limit</string>
+    <string name="authentification_not_valid">authentication_not_valid </string>
+    <string name="sign_out_question">do you want to sign out </string>
+    <string name="account_created_successfully">account created successfully </string>
+    <string name="Android_Alert">Android Alert </string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="budget_image">budget image</string>
+    <string name="money">MONEY</string>
+    <string name="saver">SAVER</string>
+    <string name="edit">Edit</string>
 </resources>

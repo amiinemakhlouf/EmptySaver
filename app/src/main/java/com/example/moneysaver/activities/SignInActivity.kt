@@ -3,10 +3,9 @@ package com.example.moneysaver.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.moneysaver.R
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.databinding.ActivitySignInBinding
 import com.example.moneysaver.repostories.MoneySaverRepository
@@ -27,7 +26,7 @@ class SignInActivity : AppCompatActivity() {
         val database = MoneySaverDatabase(this)
         val repository = MoneySaverRepository(database)
         val factory = ClientViewModelFactory(repository)
-        val provider: ViewModelProvider = ViewModelProvider(this, factory)
+        val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(ClientViewModel::class.java)
 
         binding.btSignIn.setOnClickListener {
@@ -35,14 +34,14 @@ class SignInActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPAssword.text.toString()
             viewModel.readAllClients(username = username, password = password)
-                .observe(this, Observer {
+                .observe(this,{
 
                     if (it == null) {
-                        Toast.makeText(this, "doesn't find the user ",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.authentification_not_valid,Toast.LENGTH_SHORT).show()
 
                     } else {
                         intent= Intent(this,MainActivity::class.java)
-                        intent.putExtra("id",it.id)
+                        intent.putExtra(R.string.id.toString(),it.id)
                         startActivity(intent)
 
                     }

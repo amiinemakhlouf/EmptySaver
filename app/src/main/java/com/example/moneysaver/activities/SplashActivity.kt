@@ -5,39 +5,44 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import com.example.moneysaver.databinding.ActivitySplashBinding
 import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.moneysaver.R
-import com.example.moneysaver.ui.clientlist.SignUpActivity
 
+const val  DELAY_MILLIS:Long=3000
 class SplashActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-        automaticPAssage()
+        binding=ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        automaticPAss()
     }
 
-    fun automaticPAssage(){
+    private fun automaticPAss(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         }
-        else {
-            @Suppress("DEPRECATION")
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        @Suppress("DEPRECATION")
+        hideSystemUI()
+        Handler(Looper.getMainLooper()).postDelayed({
+            intent= Intent(this,SignInActivity::class.java)
+            startActivity(intent)
+        }, DELAY_MILLIS)
 
-        Handler().postDelayed(
-            {
-                startActivity(Intent(this, SignInActivity::class.java))
-                finish()
-
-            }  ,3000
-        )
     }
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, binding.root).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+
 
 }

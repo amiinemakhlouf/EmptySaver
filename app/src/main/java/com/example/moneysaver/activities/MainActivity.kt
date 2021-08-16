@@ -1,18 +1,12 @@
 package com.example.moneysaver.activities
 
-import android.content.Intent
-import android.graphics.Color
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import androidx.viewbinding.ViewBinding
 import com.example.moneysaver.ProfileFragment
 import com.example.moneysaver.R
 import com.example.moneysaver.databinding.ActivityMainBinding
-import com.example.moneysaver.databinding.ActivitySignUpBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         binding.topToolbar.setNavigationOnClickListener { showAlertDialog() }
-        val id=intent.getStringExtra("id")
+        //val id=intent.getStringExtra("id")
 
 
         supportFragmentManager.beginTransaction().apply {
@@ -41,16 +35,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Android Alert")
-        builder.setMessage("do you want to sign out")
+        builder.setTitle(R.string.Android_Alert)
+        builder.setMessage(R.string.sign_out_question)
 
-        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
             finishAffinity()
 
 
         }
 
-        builder.setNegativeButton(android.R.string.no) { dialog, which ->
+        builder.setNegativeButton(android.R.string.cancel) { _, _ ->
             finish()
 
         }
@@ -58,22 +52,21 @@ class MainActivity : AppCompatActivity() {
 
         builder.show()
     }
-    val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.profileItem-> {
+     private val mOnNavigationItemSelectedListener = binding.navBar.setOnItemSelectedListener {
+
+        when (it.itemId) {
+            R.id.profileItem -> {
                 supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.ffFragment,ProfileFragment()).commit()
+                    replace(R.id.ffFragment, ProfileFragment()).commit()
 
                 }
-                return@OnNavigationItemSelectedListener true
+                return@setOnItemSelectedListener true
             }
+            R.id.addItem -> {
+                //   do stuff
 
+                return@setOnItemSelectedListener true
+            }}
 
-
-
-
-        }
-        false
-    }
-
-}
+            false
+    }}

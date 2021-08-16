@@ -13,6 +13,7 @@
         android:layout_height="79dp"
         android:background="@color/appColor"
         android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:tooltipText="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
