@@ -7,19 +7,20 @@ import androidx.room.RoomDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 
 @Database(entities = [ClientModelClass::class],version = 1)
-abstract class MoneySAverDatabase:RoomDatabase() {
+abstract class MoneySaverDatabase:RoomDatabase() {
 
-    abstract fun getMoneySaverDao(): MoneySaverDao
+    abstract fun clientDao(): ClientDao
+    //abstract  fun
     companion object {
         @Volatile
 
-        private var instance : MoneySAverDatabase?=null
+        private var instance : MoneySaverDatabase?=null
         private  val LOCK = Any()
         operator  fun invoke(context: Context)= instance ?: synchronized(LOCK) {
             instance ?: createDatabase(context).also { it }
         }
             private fun createDatabase(context:Context)=Room.
-                  databaseBuilder(context.applicationContext, MoneySAverDatabase::class.java," Money Saver Database").build()
+                  databaseBuilder(context.applicationContext, MoneySaverDatabase::class.java," Money Saver Database").build()
 
     }
 

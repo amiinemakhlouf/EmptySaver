@@ -15,7 +15,7 @@ class ClientViewModel(
     fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
             repository.delete(item)}
 
-    fun readAllClients()=  repository.readAllClients()
+    fun readAllClients(username:String,password:String)=  repository.readAllClients(username,password)
 
 
 }
