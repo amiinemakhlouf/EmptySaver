@@ -1,8 +1,11 @@
 package com.example.moneysaver.activities
 
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.moneysaver.ProfileFragment
 import com.example.moneysaver.R
@@ -17,8 +20,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         binding.topToolbar.setNavigationOnClickListener { showAlertDialog() }
-        //val id=intent.getStringExtra("id")
-
+        val id=intent.getIntExtra("id",888)
+        //Log.d("id value",id.toString())
+        Toast.makeText(this,id.toString(),Toast.LENGTH_SHORT).show()
+        val sharedPref=getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val editor=sharedPref.edit()
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.ffFragment,ProfileFragment()).commit()
@@ -26,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        mOnNavigationItemSelectedListener
+        mOnNavigationItemSelectedListener()
 
 
     }
@@ -52,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.show()
     }
-     private val mOnNavigationItemSelectedListener = binding.navBar.setOnItemSelectedListener {
+     private fun mOnNavigationItemSelectedListener() = binding.navBar.setOnItemSelectedListener {
 
         when (it.itemId) {
             R.id.profileItem -> {

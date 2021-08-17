@@ -41,7 +41,7 @@ class SignInActivity : AppCompatActivity() {
 
                     } else {
                         intent= Intent(this,MainActivity::class.java)
-                        intent.putExtra(R.string.id.toString(),it.id)
+                        intent.putExtra("id",it.id)
                         startActivity(intent)
 
                     }
