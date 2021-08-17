@@ -11,7 +11,7 @@ import android.view.WindowInsets
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.example.moneysaver.R
+import com.example.moneysaver.ui.signIn.SignInActivity
 
 const val  DELAY_MILLIS:Long=3000
 class SplashActivity : AppCompatActivity() {
@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         }
         hideSystemUI()
         Handler(Looper.getMainLooper()).postDelayed({
-            intent= Intent(this,SignInActivity::class.java)
+            intent= Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }, DELAY_MILLIS)
 

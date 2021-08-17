@@ -6,7 +6,7 @@
     android:paddingHorizontal="32dp"
     android:background="#9AEAE9"
     android:layout_height="match_parent"
-    tools:context=".ui.clientlist.SignUpActivity">
+    tools:context=".ui.signUp.SignUpActivity">
 
 
     <androidx.appcompat.widget.AppCompatEditText

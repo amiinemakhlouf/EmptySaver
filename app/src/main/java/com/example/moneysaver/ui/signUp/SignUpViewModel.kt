@@ -1,4 +1,4 @@
-package com.example.moneysaver.ui.clientlist
+package com.example.moneysaver.ui.signUp
 
 import androidx.lifecycle.ViewModel
 import com.example.moneysaver.data.db.entities.ClientModelClass
@@ -7,15 +7,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ClientViewModel(
+class SignUpViewModel(
     private  val repository: MoneySaverRepository
 ):ViewModel() {
     fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
         repository.uspert(item)}
-    fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
-            repository.delete(item)}
 
-    fun readAllClients(username:String,password:String)=  repository.readAllClients(username,password)
+
+        //fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
+            //repository.delete(item)}
+
 
 
 }

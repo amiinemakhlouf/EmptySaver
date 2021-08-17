@@ -1,4 +1,4 @@
-package com.example.moneysaver.ui.clientlist
+package com.example.moneysaver.ui.signUp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +22,9 @@ class SignUpActivity : AppCompatActivity() {
 
         val database = MoneySaverDatabase(this)
         val repository = MoneySaverRepository(database)
-        val factory = ClientViewModelFactory(repository)
+        val factory = SignUpViewModelFactory(repository)
         val provider = ViewModelProvider(this, factory)
-        val viewModel = provider.get(ClientViewModel::class.java)
+        val viewModel = provider.get(SignUpViewModel::class.java)
         binding.btSignUp.setOnClickListener {
             if (isBlanck(binding.etPAssword) || isBlanck(binding.etSalary) || isBlanck(binding.etUsername) ||
                 isBlanck(binding.etExpenseLimit)
@@ -34,7 +34,7 @@ class SignUpActivity : AppCompatActivity() {
             else {
                 if (!(passwordIsValid(binding.etPAssword))) {
                     binding.etPAssword.error =
-                        R.string.password_constraints.toString()
+                        "password must contain letters , digits and at least 8 characters"
 
 
                 } else {
