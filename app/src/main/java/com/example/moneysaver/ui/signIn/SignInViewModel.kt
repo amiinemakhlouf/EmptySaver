@@ -11,7 +11,7 @@ class SignInViewModel (
     private  val repository: MoneySaverRepository
 ): ViewModel() {
 
-    fun checkClient(username:String,password:String)=  repository.readAllClients(username,password)
+    fun checkClient(username:String,password:String)=  repository.checkClient(username,password)
 
 
 }

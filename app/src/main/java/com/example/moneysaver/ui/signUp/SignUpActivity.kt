@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.moneysaver.Constants
+import com.example.moneysaver.Constants.PASSWORD_MISMATCH_MSG_ERROR
+import com.example.moneysaver.Constants.PASSWORD_MSG_ERROR
+import com.example.moneysaver.Constants.SALARY_MSG_ERROR
 import com.example.moneysaver.R
-import com.example.moneysaver.activities.MainActivity
+import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 import com.example.moneysaver.databinding.ActivitySignUpBinding
@@ -34,19 +38,19 @@ class SignUpActivity : AppCompatActivity() {
             else {
                 if (!(passwordIsValid(binding.etPAssword))) {
                     binding.etPAssword.error =
-                        "password must contain letters , digits and at least 8 characters"
+                        PASSWORD_MSG_ERROR
 
 
                 } else {
                     if (!(isMatch(password = binding.etPAssword, binding.etConfirmPassword))) {
                         binding.etConfirmPassword.error =
-                            "Password and confirm password does not match"
+                            PASSWORD_MISMATCH_MSG_ERROR
                     } else {
                         if (binding.etExpenseLimit.text.toString()
                                 .toDouble() > binding.etSalary.text.toString().toDouble()
                         )
 
-                            binding.etExpenseLimit.error = R.string.salary_limit_error.toString()
+                            binding.etExpenseLimit.error = SALARY_MSG_ERROR
                         else {
                             val username = binding.etUsername
                             val password = binding.etPAssword
@@ -66,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
                             )
                                 .show()
                             intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra("id", client.id)
+                            intent.putExtra(Constants.ID, client.id)
                             startActivity(intent)
 
                         }

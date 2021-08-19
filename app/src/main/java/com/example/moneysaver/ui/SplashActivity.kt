@@ -1,4 +1,4 @@
-package com.example.moneysaver.activities
+package com.example.moneysaver.ui
 
 import android.content.Intent
 import android.os.Build
@@ -11,15 +11,26 @@ import android.view.WindowInsets
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.createDataStore
+import androidx.lifecycle.lifecycleScope
+import com.example.moneysaver.Constants
+import com.example.moneysaver.R
+import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.ui.signIn.SignInActivity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-const val  DELAY_MILLIS:Long=3000
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private  lateinit var dataStore:DataStore<Preferences>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dataStore=createDataStore(R.string.settings.toString())
         automaticPAss()
     }
 
@@ -29,10 +40,30 @@ class SplashActivity : AppCompatActivity() {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         }
         hideSystemUI()
+
+
         Handler(Looper.getMainLooper()).postDelayed({
-            intent= Intent(this, SignInActivity::class.java)
-            startActivity(intent)
-        }, DELAY_MILLIS)
+            lifecycleScope.launch {
+                val id=    read(Constants.ID)
+                if(userConnected(id))
+                {
+                    intent= Intent(this@SplashActivity, MainActivity::class.java)
+                    intent.putExtra(Constants.ID,id)
+                    startActivity(intent)
+
+                }
+                   else
+                {
+                    intent= Intent(this@SplashActivity, SignInActivity::class.java)
+                    startActivity(intent)
+
+                }
+
+            }
+
+
+
+        }, Constants.DELAY_MILLIS)
 
     }
     private fun hideSystemUI() {
@@ -43,6 +74,14 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+fun userConnected(id:Int?)=(id!=-1)
+    private suspend fun read(key: String): Int? {
+        val dataStoreKey = preferencesKey<Int>(key)
+        val preferences = dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
 
 
 }
+
+

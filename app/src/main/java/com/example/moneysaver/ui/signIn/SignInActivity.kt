@@ -5,17 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.moneysaver.Constants
 import com.example.moneysaver.R
-import com.example.moneysaver.activities.MainActivity
+import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.databinding.ActivitySignInBinding
 import com.example.moneysaver.repostories.MoneySaverRepository
-import com.example.moneysaver.ui.signUp.SignUpViewModel
-import com.example.moneysaver.ui.signUp.SignUpViewModelFactory
 import com.example.moneysaver.ui.signUp.SignUpActivity
 
 class SignInActivity : AppCompatActivity() {
-    private  lateinit var  binding:ActivitySignInBinding
+    private lateinit var binding: ActivitySignInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
@@ -35,14 +34,18 @@ class SignInActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPAssword.text.toString()
             viewModel.checkClient(username = username, password = password)
-                .observe(this,{
+                .observe(this, {
 
                     if (it == null) {
-                        Toast.makeText(this, R.string.authentification_not_valid,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            R.string.authentification_not_valid,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     } else {
-                        intent= Intent(this, MainActivity::class.java)
-                        intent.putExtra("id",it.id)
+                        intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra(Constants.ID, it.id)
                         startActivity(intent)
 
                     }
@@ -50,4 +53,5 @@ class SignInActivity : AppCompatActivity() {
                 })
 
         }
-    }}
+    }
+}

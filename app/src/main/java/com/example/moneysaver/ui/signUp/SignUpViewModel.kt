@@ -11,7 +11,7 @@ class SignUpViewModel(
     private  val repository: MoneySaverRepository
 ):ViewModel() {
     fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
-        repository.uspert(item)}
+        repository.upsert(item)}
 
 
         //fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{

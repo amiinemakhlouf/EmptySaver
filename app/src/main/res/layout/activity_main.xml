@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".ui.mainActivity.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topToolbar"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:paddingBottom="10dp"
         android:layout_height="79dp"
         android:background="@color/appColor"
@@ -38,7 +38,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navBar"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="77dp"
         android:background="@color/appColor"
         app:layout_constraintBottom_toBottomOf="parent"

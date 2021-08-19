@@ -10,6 +10,7 @@ interface ClientDao {
     @Delete
     suspend fun delete(item: ClientModelClass)
     @Query("SELECT * FROM CLIENT where username like :username and password like:password ")
-            fun  clientExists(username:String, password:String):LiveData<ClientModelClass>
-
+            fun  checkClient(username:String, password:String):LiveData<ClientModelClass>
+    @Query("Select * from Client where id=:userId")
+           fun   getCurrentUserData(userId:Int):LiveData<ClientModelClass>
 }
