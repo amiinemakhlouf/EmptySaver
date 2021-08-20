@@ -1,4 +1,4 @@
-package com.example.moneysaver
+package com.example.moneysaver.utils
 
 object Constants {
     const val ID = "id"

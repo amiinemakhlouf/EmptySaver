@@ -4,27 +4,38 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
-import com.example.moneysaver.Constants
+import androidx.lifecycle.lifecycleScope
+import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.R
 import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.databinding.ActivitySignInBinding
-import com.example.moneysaver.repostories.MoneySaverRepository
+import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.ui.signUp.SignUpActivity
+import com.example.moneysaver.utils.CustomDataStore
+import kotlinx.coroutines.launch
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
+    private  lateinit var dataStore: DataStore<Preferences>
+    private lateinit var customDataStore: CustomDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //dataStore=createDataStore(R.string.settings.toString())
+        customDataStore=CustomDataStore(this)
         binding.tvSignUp.setOnClickListener {
             intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
         val database = MoneySaverDatabase(this)
-        val repository = MoneySaverRepository(database)
+        val repository = ClientRepository(database)
         val factory = SignInViewModelFactory(repository)
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(SignInViewModel::class.java)
@@ -45,7 +56,11 @@ class SignInActivity : AppCompatActivity() {
 
                     } else {
                         intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra(Constants.ID, it.id)
+                        lifecycleScope.launch {
+                            customDataStore.saveInt(Constants.ID, it.id!!)
+
+                        }
+
                         startActivity(intent)
 
                     }
@@ -54,4 +69,11 @@ class SignInActivity : AppCompatActivity() {
 
         }
     }
+    private suspend fun saveInt(key: String, value: Int) {
+        val dataStoreKey = preferencesKey<Int>(key)
+        dataStore.edit { settings ->
+            settings[dataStoreKey] = value
+        }
+    }
+
 }

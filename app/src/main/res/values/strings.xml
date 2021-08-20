@@ -16,6 +16,7 @@
     <string name="authentification_not_valid">authentication_not_valid </string>
     <string name="sign_out_question">do you want to sign out </string>
     <string name="account_created_successfully">account created successfully </string>
+    <string name="account_updated_successfully">account updated successfully </string>
     <string name="Android_Alert">Android Alert </string>
     <string name="sign_up">SIGN UP</string>
     <string name="budget_image">budget image</string>

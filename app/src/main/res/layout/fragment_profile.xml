@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/tvUersname"
+        android:id="@+id/etUersname"
         android:layout_width="319dp"
         android:layout_height="49dp"
         android:layout_marginTop="8dp"
@@ -50,11 +50,11 @@
         android:textStyle="bold"
         android:text="@string/salary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUersname" />
+        app:layout_constraintTop_toBottomOf="@+id/etUersname" />
 
     <androidx.appcompat.widget.AppCompatEditText
 
-        android:id="@+id/tvSalary"
+        android:id="@+id/etSalary1"
         android:layout_width="321dp"
         android:layout_height="49dp"
         android:layout_marginTop="20dp"
@@ -62,7 +62,8 @@
         android:gravity=""
         android:hint="@string/salary"
         android:paddingStart="5dp"
-        android:paddingTop="2dp"
+        android:paddingTop="8dp"
+        android:inputType="numberDecimal"
         android:paddingEnd="5dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,23 +85,26 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSalary" />
+        app:layout_constraintTop_toBottomOf="@+id/etSalary1" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/tvLimitSalary"
+        android:id="@+id/etLimitSalary"
         android:layout_width="330dp"
+
         android:layout_height="49dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/edit_text_theme"
-        android:ems="10"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
         android:hint="@string/limit_salary"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/updateButton"
         android:layout_width="143dp"
         android:layout_height="56dp"
         android:layout_marginTop="52dp"
@@ -109,6 +113,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLimitSalary" />
+        app:layout_constraintTop_toBottomOf="@+id/etLimitSalary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

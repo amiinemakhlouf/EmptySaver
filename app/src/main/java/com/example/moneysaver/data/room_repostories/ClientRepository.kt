@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 
-class MoneySaverRepository(
+class ClientRepository(
     private val db:MoneySaverDatabase
 ) {
     suspend fun upsert(item: ClientModelClass) = db.clientDao().upsert(item)

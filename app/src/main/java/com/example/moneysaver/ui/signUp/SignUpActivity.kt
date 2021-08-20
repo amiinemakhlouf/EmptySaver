@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.moneysaver.Constants
-import com.example.moneysaver.Constants.PASSWORD_MISMATCH_MSG_ERROR
-import com.example.moneysaver.Constants.PASSWORD_MSG_ERROR
-import com.example.moneysaver.Constants.SALARY_MSG_ERROR
+import com.example.moneysaver.utils.Constants
+import com.example.moneysaver.utils.Constants.PASSWORD_MISMATCH_MSG_ERROR
+import com.example.moneysaver.utils.Constants.PASSWORD_MSG_ERROR
+import com.example.moneysaver.utils.Constants.SALARY_MSG_ERROR
 import com.example.moneysaver.R
 import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 import com.example.moneysaver.databinding.ActivitySignUpBinding
-import com.example.moneysaver.repostories.MoneySaverRepository
+import com.example.moneysaver.repostories.ClientRepository
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -25,7 +25,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val database = MoneySaverDatabase(this)
-        val repository = MoneySaverRepository(database)
+        val repository = ClientRepository(database)
         val factory = SignUpViewModelFactory(repository)
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(SignUpViewModel::class.java)
