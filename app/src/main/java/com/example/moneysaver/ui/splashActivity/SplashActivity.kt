@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private  lateinit var dataStore:DataStore<Preferences>
     private lateinit var customDataStore: CustomDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -41,9 +41,9 @@ class ProfileFragment : Fragment() {
         dataStore= CustomDataStore(requireContext())
         val database = MoneySaverDatabase(requireContext())
         val repository = ClientRepository(database)
-        //val factory = ProfileViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this).get(ProfileViewModel(repository)::class.java)
-        //val viewModel = provider.get(ProfileViewModel::class.java)
+        val factory = ProfileViewModelFactory(repository)
+        val provider = ViewModelProvider(this,factory)
+        val viewModel = provider.get(ProfileViewModel::class.java)
 
         lifecycleScope.launch {
             val id1 = dataStore.readInt(getString(R.string.id))

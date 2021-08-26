@@ -10,14 +10,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.utils.Constants
-import com.example.moneysaver.utils.Constants.PASSWORD_MISMATCH_MSG_ERROR
-import com.example.moneysaver.utils.Constants.SALARY_MSG_ERROR
 import com.example.moneysaver.R
 import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 import com.example.moneysaver.databinding.ActivitySignUpBinding
 import com.example.moneysaver.repostories.ClientRepository
+import com.example.moneysaver.ui.signIn.SignInViewModel
+import com.example.moneysaver.ui.signIn.SignInViewModelFactory
 import com.example.moneysaver.utils.CheckInputs
 import com.example.moneysaver.utils.CustomDataStore
 import kotlinx.coroutines.delay
@@ -34,7 +34,10 @@ class SignUpActivity : AppCompatActivity() {
         customDataStore = CustomDataStore(this)
         val database = MoneySaverDatabase(this)
         val repository = ClientRepository(database)
-        val viewModel = ViewModelProvider(this).get(SignUpViewModel(repository)::class.java)
+        val factory = SignUpViewModelFactory(repository)
+        val provider = ViewModelProvider(this, factory)
+        val viewModel = provider.get(SignUpViewModel::class.java)
+
         checkInputs = CheckInputs()
         binding.btSignUp.setOnClickListener {
             val etUsername: EditText = binding.etUsername

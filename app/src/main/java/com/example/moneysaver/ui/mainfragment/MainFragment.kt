@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.R
+import com.example.moneysaver.data.db.MoneySaverDatabase
+import com.example.moneysaver.data.db.entities.ExpenseModelClass
+import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
-import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.utils.CustomAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
 import kotlinx.coroutines.*
@@ -29,16 +31,29 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataStore = CustomDataStore(requireContext())
-        val alertDialog = CustomAlertDialog(requireContext())
+        val database = MoneySaverDatabase(requireContext())
+        val repository = ExpenseRepository(database)
+        val factory = MainFragmentViewModelFactory(repository)
+        val provider = ViewModelProvider(this, factory)
+        val viewModel = provider.get(MainFragmentViewModel::class.java)
 
-                              binding.expensesPerMonth.setOnClickListener {
-                          alertDialog.showCustomAlertDialog(
-                              getString(R.string.expenses_details),
-                              getString(R.string.title),
-                              getString(R.string.price)
-                          )
-                      }
+        dataStore = CustomDataStore(requireContext())
+         this.lifecycleScope.launch(Dispatchers.Main) {
+             val  userId=dataStore.readInt(getString(R.string.id))!!
+             binding.expensesPerMonth.setOnClickListener {
+                 val alertDialog = CustomAlertDialog(requireContext())
+
+                 alertDialog.showCustomAlertDialog(viewModel,
+                     ExpenseModelClass(clientId = userId),
+                     getString(R.string.expenses_details),
+                     getString(R.string.title),
+                     getString(R.string.price)
+                 )
+
+             }
+
+         }
+
 
 
 

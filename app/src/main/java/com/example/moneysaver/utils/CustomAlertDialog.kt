@@ -16,8 +16,8 @@ class CustomAlertDialog(private val context: Context) {
     private val layout = CustomLayout(titleEditText, priceEditText)
 
     fun showCustomAlertDialog(
-         //viewModel: MainFragmentViewModel,
-        // item:ExpenseModelClass,
+         viewModel: MainFragmentViewModel,
+        item:ExpenseModelClass,
         AlertTitle: String,
         hint1: String,
         hint2: String
@@ -39,11 +39,10 @@ class CustomAlertDialog(private val context: Context) {
                 customDataStore.saveString(context.getString(R.string.price), price)
             }
 
-           GlobalScope.launch(Dispatchers.Main){
 
-          //  viewModel.upsert(item)
+           viewModel.upsert(item)
 
-            }
+
 
 
 
@@ -52,6 +51,7 @@ class CustomAlertDialog(private val context: Context) {
         alert.setNegativeButton(android.R.string.cancel) {
 
                 _, _ ->
+
 
         }
         alert.show()
