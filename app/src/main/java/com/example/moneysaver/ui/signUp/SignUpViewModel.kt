@@ -12,9 +12,10 @@ class SignUpViewModel(
 ):ViewModel() {
     fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
         repository.upsert(item)}
+    fun checkClient(username:String,password:String)=  repository.checkClient(username,password)
 
 
-        //fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
+    //fun delete(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
             //repository.delete(item)}
 
 

@@ -22,13 +22,11 @@ import kotlinx.coroutines.launch
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
-    private  lateinit var dataStore: DataStore<Preferences>
     private lateinit var customDataStore: CustomDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //dataStore=createDataStore(R.string.settings.toString())
         customDataStore=CustomDataStore(this)
         binding.tvSignUp.setOnClickListener {
             intent = Intent(this, SignUpActivity::class.java)
@@ -57,22 +55,16 @@ class SignInActivity : AppCompatActivity() {
                     } else {
                         intent = Intent(this, MainActivity::class.java)
                         lifecycleScope.launch {
-                            customDataStore.saveInt(Constants.ID, it.id!!)
+                            customDataStore.saveInt(getString(R.string.id), it.id!!)
+                            startActivity(intent)
 
                         }
 
-                        startActivity(intent)
 
                     }
 
                 })
 
-        }
-    }
-    private suspend fun saveInt(key: String, value: Int) {
-        val dataStoreKey = preferencesKey<Int>(key)
-        dataStore.edit { settings ->
-            settings[dataStoreKey] = value
         }
     }
 

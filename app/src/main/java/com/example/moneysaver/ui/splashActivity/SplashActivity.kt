@@ -8,17 +8,16 @@ import android.os.Handler
 import android.os.Looper
 import com.example.moneysaver.databinding.ActivitySplashBinding
 import android.view.WindowInsets
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.lifecycleScope
+import com.example.moneysaver.R
 import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.ui.signIn.SignInActivity
-import com.example.moneysaver.utils.CustomAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
 import kotlinx.coroutines.launch
 
@@ -44,11 +43,11 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             lifecycleScope.launch {
-                val id= customDataStore.read(Constants.ID)
+                val id= customDataStore.readInt(getString(R.string.id))
                 if(userConnected(id))
                 {
                     intent= Intent(this@SplashActivity, MainActivity::class.java)
-                    intent.putExtra(Constants.ID,id)
+                    intent.putExtra(getString(R.string.id),id)
                     startActivity(intent)
 
                 }

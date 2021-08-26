@@ -3,6 +3,8 @@ package com.example.moneysaver.data.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.moneysaver.data.db.entities.ClientModelClass
+import com.example.moneysaver.data.db.entities.ExpenseModelClass
+
 @Dao
 interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -13,4 +15,7 @@ interface ClientDao {
             fun  checkClient(username:String, password:String):LiveData<ClientModelClass>
     @Query("Select * from Client where id=:userId")
            fun   getCurrentUserData(userId:Int):LiveData<ClientModelClass>
+
+
+
 }

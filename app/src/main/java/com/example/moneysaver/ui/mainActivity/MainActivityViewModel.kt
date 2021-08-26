@@ -7,6 +7,7 @@ class MainActivityViewModel (private  val repository: ClientRepository
 ): ViewModel() {
 
     fun getCurrentUserData(userId:Int)=repository.getCurrentUserData(userId)
+   // fun checkUser(username:String,password:String)=repository.checkClient(username,password)
 
 
 

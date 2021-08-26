@@ -1,37 +1,60 @@
 package com.example.moneysaver.utils
 
-import android.app.Activity
+import android.content.Context
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.finishAffinity
 import com.example.moneysaver.R
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.moneysaver.data.db.entities.ExpenseModelClass
+import com.example.moneysaver.ui.mainfragment.MainFragmentViewModel
+import kotlinx.coroutines.*
 
-class CustomAlertDialog {
+class CustomAlertDialog(private val context: Context) {
+    private lateinit var customDataStore: CustomDataStore
+    private val titleEditText = EditText(context)
+    private val priceEditText = EditText(context)
 
-     fun showAlertDialog(context:Activity,customDataStore: CustomDataStore) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle(R.string.Android_Alert)
-        builder.setMessage(R.string.sign_out_question)
+    private val layout = CustomLayout(titleEditText, priceEditText)
 
-        builder.setPositiveButton(android.R.string.ok) { _, _ ->
-            GlobalScope.launch {
-                customDataStore.saveInt(Constants.ID, -1)
+    fun showCustomAlertDialog(
+         //viewModel: MainFragmentViewModel,
+        // item:ExpenseModelClass,
+        AlertTitle: String,
+        hint1: String,
+        hint2: String
+    ) {
+        customDataStore = CustomDataStore(context)
+
+        this.titleEditText.hint = hint1
+        priceEditText.hint = hint2
+        val alert = AlertDialog.Builder(context)
+        alert.setTitle(AlertTitle)
+        alert.setView(layout)
+        alert.setPositiveButton(android.R.string.ok) {
+
+                _, _ ->
+            val title = titleEditText.text.toString()
+            val price = priceEditText.text.toString()
+            runBlocking {
+                customDataStore.saveString(context.getString(R.string.title), title)
+                customDataStore.saveString(context.getString(R.string.price), price)
+            }
+
+           GlobalScope.launch(Dispatchers.Main){
+
+          //  viewModel.upsert(item)
 
             }
 
-            finishAffinity(context)
 
 
         }
 
-        builder.setNegativeButton(android.R.string.cancel) { _, _ ->
+        alert.setNegativeButton(android.R.string.cancel) {
 
+                _, _ ->
 
         }
-
-
-        builder.show()
+        alert.show()
     }
-
 }
+

@@ -1,10 +1,20 @@
 package com.example.moneysaver.data.db.entities
 
-class ExpenseModelClass (
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    var date :String ="", // 2 characteres for day, 2 for month and 2 for year
-    var title:String= "",
-    var expenseType:String= " ",
-    var expenseValue:Double=0.0
-
+@Entity(tableName = "expense")
+data class ExpenseModelClass (
+    @ColumnInfo(name = "title")
+    val title:String= "",
+    @ColumnInfo(name = "value")
+    val expenseValue:Double=0.0,
+    @ColumnInfo(name = "clientId")
+    val clientId :Int ,
 )
+{
+    @PrimaryKey(autoGenerate = true)
+    var id:Int?=null
+
+}
