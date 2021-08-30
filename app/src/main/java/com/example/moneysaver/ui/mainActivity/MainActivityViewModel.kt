@@ -10,5 +10,4 @@ class MainActivityViewModel (private  val repository: ClientRepository
    // fun checkUser(username:String,password:String)=repository.checkClient(username,password)
 
 
-
 }

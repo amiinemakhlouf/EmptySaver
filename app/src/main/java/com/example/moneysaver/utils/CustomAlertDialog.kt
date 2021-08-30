@@ -2,6 +2,7 @@ package com.example.moneysaver.utils
 
 import android.content.Context
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.moneysaver.R
 import com.example.moneysaver.data.db.entities.ExpenseModelClass
@@ -16,8 +17,8 @@ class CustomAlertDialog(private val context: Context) {
     private val layout = CustomLayout(titleEditText, priceEditText)
 
     fun showCustomAlertDialog(
+        userId:Int,
          viewModel: MainFragmentViewModel,
-        item:ExpenseModelClass,
         AlertTitle: String,
         hint1: String,
         hint2: String
@@ -34,13 +35,11 @@ class CustomAlertDialog(private val context: Context) {
                 _, _ ->
             val title = titleEditText.text.toString()
             val price = priceEditText.text.toString()
-            runBlocking {
-                customDataStore.saveString(context.getString(R.string.title), title)
-                customDataStore.saveString(context.getString(R.string.price), price)
-            }
 
 
-           viewModel.upsert(item)
+           viewModel.upsert(ExpenseModelClass(title,price.toDouble(),userId))
+           Toast.makeText(context, " expense added successfully",Toast.LENGTH_SHORT).show()
+
 
 
 

@@ -9,8 +9,10 @@ class ClientRepository(
 ) {
     suspend fun upsert(item: ClientModelClass) = db.clientDao().upsert(item)
     suspend fun delete(item: ClientModelClass) = db.clientDao().delete(item)
+    fun getSalary(userId:Int)=db.clientDao().getSalary(userId)
     fun checkClient(username: String, password: String) =
         db.clientDao().checkClient(username, password)
     fun   getCurrentUserData(userId:Int)=db.clientDao().getCurrentUserData(userId)
+     fun getSalaryLimit(userId: Int)=db.clientDao().getExpenseLimit(userId)
 
 }

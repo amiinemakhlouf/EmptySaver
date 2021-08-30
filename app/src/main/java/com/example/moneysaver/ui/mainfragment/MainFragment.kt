@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.R
 import com.example.moneysaver.data.db.MoneySaverDatabase
-import com.example.moneysaver.data.db.entities.ExpenseModelClass
 import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
-import com.example.moneysaver.utils.CustomAlertDialog
-import com.example.moneysaver.utils.CustomDataStore
-import kotlinx.coroutines.*
+import com.example.moneysaver.repostories.ClientRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 class MainFragment : Fragment() {
-    private lateinit var dataStore: CustomDataStore
     private lateinit var binding: FragmentMainBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,35 +34,82 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val database = MoneySaverDatabase(requireContext())
         val repository = ExpenseRepository(database)
-        val factory = MainFragmentViewModelFactory(repository)
+        val rep = ClientRepository(database)
+        val factory = MainFragmentViewModelFactory(repository, rep, requireContext())
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(MainFragmentViewModel::class.java)
 
-        dataStore = CustomDataStore(requireContext())
-         this.lifecycleScope.launch(Dispatchers.Main) {
-             val  userId=dataStore.readInt(getString(R.string.id))!!
-             binding.expensesPerMonth.setOnClickListener {
-                 val alertDialog = CustomAlertDialog(requireContext())
+        this.lifecycleScope.launch(Dispatchers.Main) {
+            binding.expensesPerMonth.setOnClickListener {
+                viewModel.alertDialog()
 
-                 alertDialog.showCustomAlertDialog(viewModel,
-                     ExpenseModelClass(clientId = userId),
-                     getString(R.string.expenses_details),
-                     getString(R.string.title),
-                     getString(R.string.price)
-                 )
+                viewModel.alertDialog().showCustomAlertDialog(
+                    viewModel.getId(),
+                    viewModel,
+                    getString(R.string.expenses_details),
+                    getString(R.string.title),
+                    getString(R.string.price)
+                )
 
-             }
-
-         }
+            }
 
 
+        }
+        showRemainingMoney(
+            viewModel.getSalary(viewModel.getId()),
+            viewModel.getSumExpenses(viewModel.getId()),
+            viewModel.getSalaryLimit(viewModel.getId()),
+            binding.RemainingMoney
+        )
+
+
+    }
+
+    private fun showRemainingMoney(
+        salaryliveData: LiveData<Double>,
+        expensesLiveData: LiveData<Double>,
+        salaryLimit: LiveData<Double>,
+        textView: TextView
+    ) {
+        salaryliveData.observe(viewLifecycleOwner, { it ->
+            val salary = it
+
+            expensesLiveData.observe(viewLifecycleOwner, {
+                var expenses: Double
+                try {
+                    expenses = it
+
+                } catch (error: NullPointerException) {
+                    expenses = 0.0
+
+                }
+                val remainingMoney = salary - expenses
+                //
+
+                salaryLimit.observe(viewLifecycleOwner, {
+                    val limitSalary = it
+                    if (remainingMoney <= limitSalary)
+                        textView.setTextColor(resources.getColor(R.color.red, null))
+                    else
+                        textView.setTextColor(resources.getColor(R.color.black, null))
+
+
+                    textView.setText(remainingMoney.toString())
+
+                })
+
+            })
+
+        }
+        )
+
+
+    }
 
 
 
-             }
 
-
-             }
+}
 
 
 

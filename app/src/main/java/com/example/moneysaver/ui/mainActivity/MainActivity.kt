@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var dataStore: DataStore<Preferences>
     private lateinit var logOutAlertDialog: LogOutAlertDialog
     private lateinit var customDataStore: CustomDataStore
 
@@ -34,9 +33,8 @@ class MainActivity : AppCompatActivity() {
             logOutAlertDialog.showAlertDialog(this, customDataStore)
         }
 
-        dataStore = createDataStore(R.string.settings.toString())
 
-        val res = getString(R.string.settings)
+
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.ffFragment, MainFragment()).commit()

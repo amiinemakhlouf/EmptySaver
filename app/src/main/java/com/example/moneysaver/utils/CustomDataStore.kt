@@ -26,9 +26,15 @@ class CustomDataStore(context: Context) {
         val preferences = dataStore.data.first()
         return preferences[dataStoreKey]
     }
+    suspend fun readDouble(key: String): Double? {
+        val dataStoreKey = preferencesKey<Double>(key)
+        val preferences = dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
 
 
-        suspend fun saveInt(key: String, value: Int) {
+
+    suspend fun saveInt(key: String, value: Int) {
         val dataStoreKey = preferencesKey<Int>(key)
         dataStore.edit { settings ->
             settings[dataStoreKey] = value

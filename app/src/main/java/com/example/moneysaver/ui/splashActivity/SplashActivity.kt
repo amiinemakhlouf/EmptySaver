@@ -13,66 +13,36 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.R
+import com.example.moneysaver.data.db.MoneySaverDatabase
+import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.ui.signIn.SignInActivity
+import com.example.moneysaver.ui.signIn.SignInViewModel
+import com.example.moneysaver.ui.signIn.SignInViewModelFactory
+import com.example.moneysaver.ui.splashActivity.SplashActivityViewModel
+import com.example.moneysaver.ui.splashActivity.SplashActivtyViewModelFactory
 import com.example.moneysaver.utils.CustomDataStore
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private lateinit var customDataStore: CustomDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        customDataStore= CustomDataStore(this)
-        automaticPAss()
+        val factory = SplashActivtyViewModelFactory(this)
+        val provider = ViewModelProvider(this, factory)
+        val viewModel = provider.get(SplashActivityViewModel::class.java)
+
+        viewModel.automaticPAss(this,binding)
     }
 
-    private fun automaticPAss(){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }
-        hideSystemUI()
 
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            lifecycleScope.launch {
-                val id= customDataStore.readInt(getString(R.string.id))
-                if(userConnected(id))
-                {
-                    intent= Intent(this@SplashActivity, MainActivity::class.java)
-                    intent.putExtra(getString(R.string.id),id)
-                    startActivity(intent)
-
-                }
-                   else
-                {
-                    intent= Intent(this@SplashActivity, SignInActivity::class.java)
-                    startActivity(intent)
-
-                }
-
-            }
-
-
-
-        }, Constants.DELAY_MILLIS)
-
-    }
-    private fun hideSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.root).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-fun userConnected(id:Int?)=(id!=-1)
 
 
 }

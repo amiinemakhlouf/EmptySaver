@@ -15,7 +15,9 @@ interface ClientDao {
             fun  checkClient(username:String, password:String):LiveData<ClientModelClass>
     @Query("Select * from Client where id=:userId")
            fun   getCurrentUserData(userId:Int):LiveData<ClientModelClass>
-
-
+   @Query("select salary from client where  id=:userId")
+          fun getSalary(userId: Int):LiveData<Double>
+   @Query("SELECT expenseLimit FROM client WHERE ID=:userId")
+          fun getExpenseLimit(userId: Int):LiveData<Double>
 
 }

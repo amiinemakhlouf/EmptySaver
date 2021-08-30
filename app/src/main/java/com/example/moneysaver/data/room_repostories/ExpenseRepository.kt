@@ -7,5 +7,6 @@ class ExpenseRepository (private val db: MoneySaverDatabase
 ) {
     suspend fun upsert(item: ExpenseModelClass) = db.expensesDao().upsert(item)
     fun getCurrentUserExpenses(id:Int)=db.expensesDao().getCurrentUserExpenses(id)
+    fun getSumExpenses(id:Int)=db.expensesDao().getSumExpenses(id)
 
 }
