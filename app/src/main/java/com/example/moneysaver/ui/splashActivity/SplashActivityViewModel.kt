@@ -62,7 +62,15 @@ class SplashActivityViewModel(private val context: Activity)
 
         Handler(Looper.getMainLooper()).postDelayed({
             viewModelScope.launch {
-                val id= this@SplashActivityViewModel.getId()
+                var id:Int?=1
+                try {
+                    val id= this@SplashActivityViewModel.getId()
+
+                }
+                catch(error:NullPointerException)
+                {
+                    id=-1
+                }
                 if(userConnected(id))
                 {
                     this@SplashActivityViewModel.goToMainActivity()

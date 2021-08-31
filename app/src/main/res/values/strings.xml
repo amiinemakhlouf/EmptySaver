@@ -14,6 +14,8 @@
     <string name="password_msg_error">        password must contain letters , digits and at least 8 characters</string>
     <string name="password_mismatch_error">        Password and confirm password does not match</string>
     <string name="salary_msg_error">salary limit cannot be higher than salary</string>
+    <string name="expenses_added">expense added successfully</string>
+    <string name="fields_constraints">fields cannot be empty</string>
 
 
     <string name="sign_in">SIGN IN</string>

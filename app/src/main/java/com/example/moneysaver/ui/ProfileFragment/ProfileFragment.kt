@@ -71,16 +71,20 @@ class ProfileFragment : Fragment() {
                     val username=binding.etUersname.text.toString()
                     val salary=binding.etSalary1.text.toString().toDouble()
                     val salaryLimit=binding.etLimitSalary.text.toString().toDouble()
+                    if(salaryLimit>salary)
+                        binding.etLimitSalary.error=getString(R.string.salary_msg_error)
+                    else {
 
-                    val client=ClientModelClass(username,"monastir2021",salary,salaryLimit)
-                    client.id=id1
-                viewModel.upsert(client)
-                Toast.makeText(
-                    requireContext(),
-                    R.string.account_updated_successfully,
-                    Toast.LENGTH_SHORT).show()
+                        val client = ClientModelClass(username, "monastir", salary, salaryLimit)
+                        client.id = id1
+                        viewModel.upsert(client)
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.account_updated_successfully,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-
+                    }
             }}
 
 

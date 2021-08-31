@@ -39,22 +39,11 @@ class MainFragment : Fragment() {
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(MainFragmentViewModel::class.java)
 
-        this.lifecycleScope.launch(Dispatchers.Main) {
-            binding.expensesPerMonth.setOnClickListener {
-                viewModel.alertDialog()
+        categoryOnClickListener(binding.expensesPerDay,viewModel)
+        categoryOnClickListener(binding.expensesPerMonth,viewModel)
+        categoryOnClickListener(binding.expensesPerWeek,viewModel)
+        categoryOnClickListener(binding.variousExpenses,viewModel)
 
-                viewModel.alertDialog().showCustomAlertDialog(
-                    viewModel.getId(),
-                    viewModel,
-                    getString(R.string.expenses_details),
-                    getString(R.string.title),
-                    getString(R.string.price)
-                )
-
-            }
-
-
-        }
         showRemainingMoney(
             viewModel.getSalary(viewModel.getId()),
             viewModel.getSumExpenses(viewModel.getId()),
@@ -91,7 +80,7 @@ class MainFragment : Fragment() {
                     if (remainingMoney <= limitSalary)
                         textView.setTextColor(resources.getColor(R.color.red, null))
                     else
-                        textView.setTextColor(resources.getColor(R.color.black, null))
+                        textView.setTextColor(resources.getColor(R.color.green, null))
 
 
                     textView.setText(remainingMoney.toString())
@@ -102,6 +91,27 @@ class MainFragment : Fragment() {
 
         }
         )
+
+
+    }
+    fun categoryOnClickListener(view:View,viewModel:MainFragmentViewModel){
+        this.lifecycleScope.launch(Dispatchers.Main) {
+            view.setOnClickListener {
+                viewModel.alertDialog()
+
+                viewModel.alertDialog().showCustomAlertDialog(
+                    viewModel.getId(),
+                    viewModel,
+                    getString(R.string.expenses_details),
+                    getString(R.string.title),
+                    getString(R.string.price)
+                )
+
+            }
+
+
+        }
+
 
 
     }
