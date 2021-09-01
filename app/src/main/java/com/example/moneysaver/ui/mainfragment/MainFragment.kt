@@ -43,7 +43,6 @@ class MainFragment : Fragment() {
         categoryOnClickListener(binding.expensesPerMonth,viewModel)
         categoryOnClickListener(binding.expensesPerWeek,viewModel)
         categoryOnClickListener(binding.variousExpenses,viewModel)
-
         showRemainingMoney(
             viewModel.getSalary(viewModel.getId()),
             viewModel.getSumExpenses(viewModel.getId()),

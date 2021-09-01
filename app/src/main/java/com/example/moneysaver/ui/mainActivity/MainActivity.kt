@@ -10,6 +10,7 @@ import com.example.moneysaver.ui.ProfileFragment.ProfileFragment
 import com.example.moneysaver.R
 import com.example.moneysaver.databinding.ActivityMainBinding
 import com.example.moneysaver.repostories.ClientRepository
+import com.example.moneysaver.ui.HistoryFragment.HistoryFragment
 import com.example.moneysaver.ui.mainfragment.MainFragment
 import com.example.moneysaver.utils.LogOutAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
@@ -64,6 +65,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
+                return@setOnItemSelectedListener true
+            }
+            R.id.historyItem-> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.ffFragment, HistoryFragment()).commit()
+
+                }
                 return@setOnItemSelectedListener true
             }
         }

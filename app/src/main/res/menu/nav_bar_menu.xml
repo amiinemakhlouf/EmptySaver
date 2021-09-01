@@ -7,7 +7,7 @@
         />
     <item
         android:title="history"
-        android:id="@+id/marketitem"
+        android:id="@+id/historyItem"
         android:icon="@drawable/ic_baseline_history_24"
         />
     <item

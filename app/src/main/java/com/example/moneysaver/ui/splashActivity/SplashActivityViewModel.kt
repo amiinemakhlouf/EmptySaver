@@ -37,6 +37,7 @@ class SplashActivityViewModel(private val context: Activity)
         return id
 
     }
+
     fun goToMainActivity(){
         context.startActivity(Intent(context,MainActivity::class.java))
 
