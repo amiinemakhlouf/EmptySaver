@@ -12,7 +12,7 @@ class HistoryFragmentViewModel (private  val repository: ExpenseRepository,priva
 ): ViewModel() {
     private val dataStore= CustomDataStore(context)
 
-    fun getCurrentUserData(userId:Int)=repository.getCurrentUserExpenses(userId)
+    fun getCurrentUserExpenses(userId:Int)=repository.getCurrentUserExpenses(userId)
     // fun checkUser(username:String,password:String)=repository.checkClient(username,password)
     fun getId() :Int  {
         val id :Int

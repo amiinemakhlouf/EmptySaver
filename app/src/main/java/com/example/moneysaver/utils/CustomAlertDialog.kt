@@ -21,7 +21,10 @@ class CustomAlertDialog(private val context: Context) {
     fun showCustomAlertDialog(
         userId: Int,
         viewModel: MainFragmentViewModel,
+        coef : Int,
+        category:String,
         AlertTitle: String,
+
         hint1: String,
         hint2: String
     ) {
@@ -51,7 +54,7 @@ class CustomAlertDialog(private val context: Context) {
         val price = priceEditText.text.toString()
 
 
-        viewModel.upsert(ExpenseModelClass(title, price.toDouble(), userId))
+        viewModel.upsert(ExpenseModelClass(title, price.toDouble()*coef, userId,category))
         Toast.makeText(context, context.getString(R.string.expenses_added), Toast.LENGTH_SHORT)
             .show()
 

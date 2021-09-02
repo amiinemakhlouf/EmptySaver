@@ -9,7 +9,7 @@ import com.example.moneysaver.data.db.entities.ExpenseModelClass
 import com.example.moneysaver.databinding.FragmentHistoryBinding
 import com.example.moneysaver.databinding.ItemsBinding
 
-class ExpenseAdapter (var  dataSEt:List<ExpenseModelClass>,binding: FragmentHistoryBinding
+class ExpenseAdapter (var  dataSEt:MutableList<ExpenseModelClass>,binding: FragmentHistoryBinding
 ): RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> ()  {
     class ExpenseViewHolder( val binding:ItemsBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,6 +23,7 @@ class ExpenseAdapter (var  dataSEt:List<ExpenseModelClass>,binding: FragmentHist
         holder.itemView.apply {
             holder.binding.tvPrice.text=p.expenseValue.toString()
             holder.binding.tvTitle.text=p.title
+            holder.binding.tvCategory.text=p.category
         }
         }
 

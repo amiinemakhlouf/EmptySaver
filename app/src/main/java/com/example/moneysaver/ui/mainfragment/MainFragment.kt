@@ -14,6 +14,7 @@ import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
 import com.example.moneysaver.repostories.ClientRepository
+import com.example.moneysaver.utils.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
@@ -39,10 +40,10 @@ class MainFragment : Fragment() {
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(MainFragmentViewModel::class.java)
 
-        categoryOnClickListener(binding.expensesPerDay,viewModel)
-        categoryOnClickListener(binding.expensesPerMonth,viewModel)
-        categoryOnClickListener(binding.expensesPerWeek,viewModel)
-        categoryOnClickListener(binding.variousExpenses,viewModel)
+        categoryOnClickListener(binding.expensesPerDay,viewModel,Category.Daily.coeff,Category.Daily.name)
+        categoryOnClickListener(binding.expensesPerMonth,viewModel,Category.Monthly.coeff,Category.Monthly.name)
+        categoryOnClickListener(binding.expensesPerWeek,viewModel,Category.Weekly.coeff,Category.Weekly.name)
+        categoryOnClickListener(binding.variousExpenses,viewModel,Category.Various.coeff,Category.Various.name)
         showRemainingMoney(
             viewModel.getSalary(viewModel.getId()),
             viewModel.getSumExpenses(viewModel.getId()),
@@ -93,7 +94,7 @@ class MainFragment : Fragment() {
 
 
     }
-    fun categoryOnClickListener(view:View,viewModel:MainFragmentViewModel){
+    fun categoryOnClickListener(view:View,viewModel:MainFragmentViewModel,coef:Int,name:String){
         this.lifecycleScope.launch(Dispatchers.Main) {
             view.setOnClickListener {
                 viewModel.alertDialog()
@@ -101,6 +102,8 @@ class MainFragment : Fragment() {
                 viewModel.alertDialog().showCustomAlertDialog(
                     viewModel.getId(),
                     viewModel,
+                     coef        ,
+                    name,
                     getString(R.string.expenses_details),
                     getString(R.string.title),
                     getString(R.string.price)

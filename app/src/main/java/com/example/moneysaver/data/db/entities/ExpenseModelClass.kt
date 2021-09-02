@@ -12,6 +12,8 @@ data class ExpenseModelClass (
     val expenseValue:Double=0.0,
     @ColumnInfo(name = "clientId")
     val clientId :Int ,
+    @ColumnInfo(name="category")
+    val category: String
 )
 {
     @PrimaryKey(autoGenerate = true)

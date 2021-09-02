@@ -14,6 +14,7 @@ import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.ui.ProfileFragment.ProfileViewModel
+import com.example.moneysaver.utils.Category
 import com.example.moneysaver.utils.CustomAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +25,7 @@ import java.lang.NullPointerException
 
 class MainFragmentViewModel(private  val repository: ExpenseRepository, private val rep:ClientRepository,private val context:Context
 ): ViewModel() {
+      lateinit var category: Category
     private val dataStore=CustomDataStore(context)
     fun  alertDialog():CustomAlertDialog{
         return CustomAlertDialog(context)
