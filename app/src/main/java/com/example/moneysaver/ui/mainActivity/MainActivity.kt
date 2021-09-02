@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         customDataStore = CustomDataStore(this)
         binding.topToolbar.setNavigationOnClickListener {
-            logOutAlertDialog.showAlertDialog(this, customDataStore)
+            logOutAlertDialog.showAlertDialog(this)
         }
 
 

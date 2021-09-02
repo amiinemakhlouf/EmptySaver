@@ -26,12 +26,11 @@ import kotlinx.coroutines.runBlocking
 
 class SplashActivityViewModel(private val context: Activity)
     : ViewModel() {
-    private val dataStore= CustomDataStore(context )
 
     fun getId() :Int  {
         val id :Int
         runBlocking {
-            id= dataStore.readInt(context.getString(R.string.id))!!
+            id= CustomDataStore(context).readInt(context.getString(R.string.id))!!
 
         }
         return id
@@ -64,15 +63,8 @@ class SplashActivityViewModel(private val context: Activity)
         Handler(Looper.getMainLooper()).postDelayed({
             viewModelScope.launch {
                 var id:Int?=1
-                try {
-                    val id= this@SplashActivityViewModel.getId()
 
-                }
-                catch(error:NullPointerException)
-                {
-                    id=-1
-                }
-                if(userConnected(id))
+                if(userConnected(this@SplashActivityViewModel.getId()))
                 {
                     this@SplashActivityViewModel.goToMainActivity()
                 }

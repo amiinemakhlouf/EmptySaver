@@ -39,6 +39,7 @@ class MainFragment : Fragment() {
         val factory = MainFragmentViewModelFactory(repository, rep, requireContext())
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(MainFragmentViewModel::class.java)
+        val a =viewModel.getId()
 
         categoryOnClickListener(binding.expensesPerDay,viewModel,Category.Daily.coeff,Category.Daily.name)
         categoryOnClickListener(binding.expensesPerMonth,viewModel,Category.Monthly.coeff,Category.Monthly.name)

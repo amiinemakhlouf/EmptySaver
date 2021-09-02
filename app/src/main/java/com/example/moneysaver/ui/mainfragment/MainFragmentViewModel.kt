@@ -26,7 +26,6 @@ import java.lang.NullPointerException
 class MainFragmentViewModel(private  val repository: ExpenseRepository, private val rep:ClientRepository,private val context:Context
 ): ViewModel() {
       lateinit var category: Category
-    private val dataStore=CustomDataStore(context)
     fun  alertDialog():CustomAlertDialog{
         return CustomAlertDialog(context)
     }
@@ -41,7 +40,7 @@ class MainFragmentViewModel(private  val repository: ExpenseRepository, private 
         fun getId() :Int  {
                  val id :Int
                  runBlocking {
-                      id= dataStore.readInt(context.getString(R.string.id))!!
+                      id= CustomDataStore(context).readInt(context.getString(R.string.id))!!
 
                  }
             return id
