@@ -31,7 +31,7 @@ class CustomAlertDialog( val context: Context) {
         this.titleEditText.hint = hint1
         priceEditText.hint = hint2
         val dialog = AlertDialog.Builder(context)
-        dialog.setTitle(AlertTitle)
+        dialog.setTitle(AlertTitle+ "  *   $coef")
         dialog.setView(layout)
         dialog.setPositiveButton(android.R.string.ok) {
 

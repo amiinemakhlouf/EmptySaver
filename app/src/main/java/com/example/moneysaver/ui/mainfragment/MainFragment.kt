@@ -104,7 +104,7 @@ class MainFragment : Fragment() {
                     viewModel,
                      coef        ,
                     name,
-                    getString(R.string.expenses_details),
+                    getString(R.string.expenses),
                     getString(R.string.title),
                     getString(R.string.price)
                 )

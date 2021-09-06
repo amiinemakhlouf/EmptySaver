@@ -38,6 +38,7 @@
             app:cardBackgroundColor="@color/appColor">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
@@ -47,6 +48,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/month"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/expensesMonthOrVarious"
+                    android:textSize="11sp"/>
 
 
             </LinearLayout>
@@ -63,6 +70,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
@@ -70,6 +78,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/week"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/expensesWeek"
+                    android:textSize="11sp"/>
+
 
 
             </LinearLayout>
@@ -86,6 +101,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
@@ -93,6 +109,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/day"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/expensesDay"
+                    android:textSize="11sp"/>
 
 
             </LinearLayout>
@@ -111,6 +133,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
@@ -118,6 +141,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/various"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/expensesMonthOrVarious"
+                    android:textSize="11sp"/>
 
 
             </LinearLayout>

@@ -15,5 +15,6 @@ class CustomLayout(private val title: EditText, private val price:EditText):Line
 
 
 
+
     }
 }
