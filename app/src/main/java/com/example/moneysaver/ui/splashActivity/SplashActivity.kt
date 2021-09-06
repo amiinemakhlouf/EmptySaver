@@ -37,7 +37,6 @@ class SplashActivity : AppCompatActivity() {
         val factory = SplashActivtyViewModelFactory(this)
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(SplashActivityViewModel::class.java)
-        val b=viewModel.getId()
 
         viewModel.automaticPAss(this,binding)
     }

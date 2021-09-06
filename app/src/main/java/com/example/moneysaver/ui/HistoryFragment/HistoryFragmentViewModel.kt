@@ -23,6 +23,7 @@ class HistoryFragmentViewModel (private  val repository: ExpenseRepository,priva
         return id
 
     }
+    suspend fun deleteExpense(expenseId:Int)= repository.deleteExpense(expenseId )
 
 
 }

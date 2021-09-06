@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="appColor">#9AEAE9</color>
     <color name="red">#FF0000	</color>
+    <color name="blue">#0000FF</color>
+    <color name="pink">#FFC0CB</color>
 </resources>

@@ -13,6 +13,8 @@ interface ExpensesDao {
     fun   getCurrentUserExpenses(userId:Int):LiveData<MutableList<ExpenseModelClass>>
     @Query("Select Sum(value) from expense group by(clientId) having clientId =:userId ")
     fun getSumExpenses(userId: Int): LiveData<Double>
+    @Query("delete from expense where id=:expenseId")
+    fun deleteExpense(expenseId:Int)
 
 
 

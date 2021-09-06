@@ -1,7 +1,6 @@
 package com.example.moneysaver.utils
 
 import android.content.Context
-import android.os.Looper
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -9,9 +8,8 @@ import com.example.moneysaver.R
 import com.example.moneysaver.data.db.entities.ExpenseModelClass
 import com.example.moneysaver.ui.mainfragment.MainFragmentViewModel
 import kotlinx.coroutines.*
-import java.util.logging.Handler
 
-class CustomAlertDialog(private val context: Context) {
+class CustomAlertDialog( val context: Context) {
     private lateinit var customDataStore: CustomDataStore
     private val titleEditText = EditText(context)
     private val priceEditText = EditText(context)
@@ -32,10 +30,10 @@ class CustomAlertDialog(private val context: Context) {
 
         this.titleEditText.hint = hint1
         priceEditText.hint = hint2
-        val alert = AlertDialog.Builder(context)
-        alert.setTitle(AlertTitle)
-        alert.setView(layout)
-        alert.setPositiveButton(android.R.string.ok) {
+        val dialog = AlertDialog.Builder(context)
+        dialog.setTitle(AlertTitle)
+        dialog.setView(layout)
+        dialog.setPositiveButton(android.R.string.ok) {
 
                 _, _ ->
 
@@ -61,14 +59,16 @@ class CustomAlertDialog(private val context: Context) {
 
     }
 
-    alert.setNegativeButton(android.R.string.cancel)
+    dialog.setNegativeButton(android.R.string.cancel)
     {
 
         _, _ ->
 
 
+
+
     }
-    alert.show()
+    dialog.show()
 
 } }
 

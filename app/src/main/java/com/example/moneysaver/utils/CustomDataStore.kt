@@ -13,7 +13,7 @@ import com.example.moneysaver.ui.signUp.SignUpViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
-class CustomDataStore(context: Context) {
+class CustomDataStore(context: Context):DataStore<Preferences> {
      private val dataStore=context.createDataStore(R.string.settings.toString())
 
      suspend fun readInt(key: String): Int? {
@@ -53,6 +53,12 @@ class CustomDataStore(context: Context) {
         }
     }
 
+    override val data: Flow<Preferences>
+        get() = TODO("Not yet implemented")
+
+    override suspend fun updateData(transform: suspend (t: Preferences) -> Preferences): Preferences {
+        TODO("Not yet implemented")
+    }
 
 
 }
