@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneysaver.R
 import com.example.moneysaver.data.db.entities.ExpenseModelClass
+import com.example.moneysaver.databinding.ActivityMainBinding.bind
 import com.example.moneysaver.databinding.FragmentHistoryBinding
 import com.example.moneysaver.databinding.ItemsBinding
 import com.example.moneysaver.ui.HistoryFragment.HistoryFragment
@@ -22,6 +23,13 @@ class ExpenseAdapter(
            init {
                binding.tvTitle.setOnClickListener(this)
            }
+        fun bind(data:ExpenseModelClass)
+        {
+            binding.tvTitle.text=data.title
+            binding.tvPrice.text=data.expenseValue.toString()
+            binding.tvCategory.text=data.category
+
+        }
 
         override fun onClick(v: View?) {
             val position =adapterPosition
@@ -55,9 +63,7 @@ class ExpenseAdapter(
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
         val p = dataSEt[position]
         holder.itemView.apply {
-            holder.binding.tvPrice.text = p.expenseValue.toString()
-            holder.binding.tvTitle.text = p.title
-            holder.binding.tvCategory.text = p.category
+            holder.bind(dataSEt[position])
             when (p.category) {
                 resources.getString(R.string.daily) -> holder.binding.tvCategory.setTextColor(
                     resources.getColor(R.color.green, null)
@@ -74,9 +80,7 @@ class ExpenseAdapter(
 
 
             }
-            /*    holder.binding.root.setOnClickListener {
-                    Log.d("mon teste","fonctionne bien")
-                }*/
+
         }
     }
 

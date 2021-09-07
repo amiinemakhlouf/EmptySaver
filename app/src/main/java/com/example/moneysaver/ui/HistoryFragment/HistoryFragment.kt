@@ -20,7 +20,7 @@ import com.example.moneysaver.utils.ExpenseAdapter
 
 class HistoryFragment : Fragment(),ExpenseAdapter.OnExpenseItemClickListener {
     private  lateinit var binding: FragmentHistoryBinding
-    private  lateinit var adapter :ExpenseAdapter
+    private  lateinit var expenseAdapter :ExpenseAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,22 +34,21 @@ class HistoryFragment : Fragment(),ExpenseAdapter.OnExpenseItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list= mutableListOf<ExpenseModelClass>()
+        val dataSet= mutableListOf<ExpenseModelClass>()
         val database = MoneySaverDatabase(requireContext())
         val repository = ExpenseRepository(database)
         val factory = HistoryFragmentViewFactory(repository,requireContext())
         val provider = ViewModelProvider(this, factory)
         val viewModel = provider.get(HistoryFragmentViewModel::class.java)
-         adapter = ExpenseAdapter(list, this,viewModel)
-        binding.rvExpensesItems.layoutManager=LinearLayoutManager(requireContext())
-        binding.rvExpensesItems.adapter=adapter
+        initRecyclerView(dataSet,this,viewModel)
+
 
         viewModel.getCurrentUserExpenses(viewModel.getId()).observe(viewLifecycleOwner,{
-            adapter.dataSEt=it
-            adapter.notifyDataSetChanged()
+            expenseAdapter.dataSEt=it
+            expenseAdapter.notifyDataSetChanged()
            val itemsBinding:ItemsBinding= ItemsBinding.inflate(layoutInflater)
 
-            adapter.ExpenseViewHolder(itemsBinding).onClick(itemsBinding.root)
+            expenseAdapter.ExpenseViewHolder(itemsBinding).onClick(itemsBinding.root)
 
 
 
@@ -63,7 +62,16 @@ class HistoryFragment : Fragment(),ExpenseAdapter.OnExpenseItemClickListener {
 
     override fun expenseOnItemClick(position: Int,viewModel:HistoryFragmentViewModel) {
 
-        DeleteItemDialog(viewModel).showAlertDialog(requireActivity(),adapter.dataSEt[position].id!!)
+        DeleteItemDialog(viewModel).showAlertDialog(requireActivity(),expenseAdapter.dataSEt[position].id!!)
 
     }
+    private fun initRecyclerView(dataset:MutableList<ExpenseModelClass>,listener:HistoryFragment,viewModel: HistoryFragmentViewModel){
+
+        binding.rvExpensesItems.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            expenseAdapter = ExpenseAdapter(dataset,listener,viewModel)
+            adapter = expenseAdapter
+        }
+    }
+
 }
