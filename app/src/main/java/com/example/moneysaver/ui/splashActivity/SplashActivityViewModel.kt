@@ -24,34 +24,38 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class SplashActivityViewModel(private val context: Activity)
-    : ViewModel() {
+class SplashActivityViewModel(private val context: Activity) : ViewModel() {
 
-    fun getId() :Int  {
-        val id :Int
+    fun getId(): Int {
+        var id: Int = -1
         runBlocking {
-            id= CustomDataStore(context).readInt(context.getString(R.string.id))!!
+            if (CustomDataStore(context).readInt(context.getString(R.string.id)) != null)
+                id = CustomDataStore(context).readInt(context.getString(R.string.id))!!
 
         }
         return id
 
     }
 
-    fun goToMainActivity(){
-        context.startActivity(Intent(context,MainActivity::class.java))
+    fun goToMainActivity() {
+        context.startActivity(Intent(context, MainActivity::class.java))
 
     }
-    fun goToSignInActivity(){
-        context.startActivity(Intent(context,SignInActivity::class.java))
+
+    fun goToSignInActivity() {
+        context.startActivity(Intent(context, SignInActivity::class.java))
     }
-     fun hideSystemUI(binding: ActivitySplashBinding) {
+
+    fun hideSystemUI(binding: ActivitySplashBinding) {
         WindowCompat.setDecorFitsSystemWindows(context.window, false)
         WindowInsetsControllerCompat(context.window, binding.root).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
-     fun automaticPAss(context: Activity,binding: ActivitySplashBinding){
+
+    fun automaticPAss(context: Activity, binding: ActivitySplashBinding) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             context.window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -62,30 +66,21 @@ class SplashActivityViewModel(private val context: Activity)
 
         Handler(Looper.getMainLooper()).postDelayed({
             viewModelScope.launch {
-                var id:Int?=1
 
-                if(userConnected(this@SplashActivityViewModel.getId()))
-                {
+                if (userConnected(this@SplashActivityViewModel.getId())) {
                     this@SplashActivityViewModel.goToMainActivity()
-                }
-                else
-                {
+                } else {
                     this@SplashActivityViewModel.goToSignInActivity()
                 }
 
             }
 
 
-
         }, Constants.DELAY_MILLIS)
 
     }
-    fun userConnected(id:Int?)=(id!=-1)
 
-
-
-
-
+    fun userConnected(id: Int?) = (id != -1)
 
 
 }

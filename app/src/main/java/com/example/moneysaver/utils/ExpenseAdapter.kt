@@ -20,7 +20,7 @@ class ExpenseAdapter(
 ) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
     inner class ExpenseViewHolder(val binding: ItemsBinding) : RecyclerView.ViewHolder(binding.root),View.OnClickListener{
            init {
-               binding.root.setOnClickListener(this)
+               binding.tvTitle.setOnClickListener(this)
            }
 
         override fun onClick(v: View?) {
