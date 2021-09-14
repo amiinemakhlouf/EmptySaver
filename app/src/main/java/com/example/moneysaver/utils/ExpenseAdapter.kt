@@ -1,5 +1,6 @@
 package com.example.moneysaver.utils
 
+import android.content.res.Resources
 import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.LayoutInflater
@@ -64,22 +65,7 @@ class ExpenseAdapter(
         val p = dataSEt[position]
         holder.itemView.apply {
             holder.bind(dataSEt[position])
-            when (p.category) {
-                resources.getString(R.string.daily) -> holder.binding.tvCategory.setTextColor(
-                    resources.getColor(R.color.green, null)
-                )
-                resources.getString(R.string.monthly) -> holder.binding.tvCategory.setTextColor(
-                    resources.getColor(R.color.red, null)
-                )
-                resources.getString(R.string.weekly) -> holder.binding.tvCategory.setTextColor(
-                    resources.getColor(R.color.blue, null)
-                )
-                resources.getString(R.string.various_pascal_case) -> holder.binding.tvCategory.setTextColor(
-                    resources.getColor(R.color.pink, null)
-                )
-
-
-            }
+            setColor(p.category,resources,holder)
 
         }
     }
@@ -87,6 +73,25 @@ class ExpenseAdapter(
 
     override fun getItemCount(): Int {
         return dataSEt.size
+    }
+    private  fun setColor(category:String,resources:Resources,holder: ExpenseViewHolder){
+        when (category) {
+            resources.getString(R.string.daily) -> holder.binding.tvCategory.setTextColor(
+                resources.getColor(R.color.green, null)
+            )
+            resources.getString(R.string.monthly) -> holder.binding.tvCategory.setTextColor(
+                resources.getColor(R.color.red, null)
+            )
+            resources.getString(R.string.weekly) -> holder.binding.tvCategory.setTextColor(
+                resources.getColor(R.color.blue, null)
+            )
+            resources.getString(R.string.various_pascal_case) -> holder.binding.tvCategory.setTextColor(
+                resources.getColor(R.color.pink, null)
+            )
+
+
+        }
+
     }
 
 }

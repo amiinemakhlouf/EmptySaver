@@ -1,5 +1,6 @@
 package com.example.moneysaver.ui.mainfragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.moneysaver.R
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
+import com.example.moneysaver.databinding.MainFragment2Binding
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.utils.Category
 import kotlinx.coroutines.Dispatchers
