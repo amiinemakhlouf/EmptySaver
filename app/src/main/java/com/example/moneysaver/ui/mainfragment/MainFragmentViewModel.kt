@@ -17,16 +17,19 @@ import com.example.moneysaver.ui.ProfileFragment.ProfileViewModel
 import com.example.moneysaver.utils.Category
 import com.example.moneysaver.utils.CustomAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.lang.NullPointerException
+import javax.inject.Inject
 
-class MainFragmentViewModel(private  val repository: ExpenseRepository, private val rep:ClientRepository,private val context:Context
+@HiltViewModel
+class MainFragmentViewModel @Inject constructor(private  val repository: ExpenseRepository, private val rep:ClientRepository
 ): ViewModel() {
       lateinit var category: Category
-    fun  alertDialog():CustomAlertDialog{
+    fun  alertDialog(context: Context):CustomAlertDialog{
         return CustomAlertDialog(context)
     }
 
@@ -37,7 +40,7 @@ class MainFragmentViewModel(private  val repository: ExpenseRepository, private 
     }
     fun getCurrentUserExpenses(id:Int)=repository.getCurrentUserExpenses(id)
 
-        fun getId() :Int  {
+        fun getId(context: Context) :Int  {
                  val id :Int
                  runBlocking {
                       id= CustomDataStore(context).readInt(context.getString(R.string.id))!!

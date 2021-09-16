@@ -1,20 +1,26 @@
 package com.example.moneysaver.ui.HistoryFragment
 
 import android.content.Context
+import android.view.contentcapture.ContentCaptureCondition
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.example.moneysaver.R
 import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class HistoryFragmentViewModel (private  val repository: ExpenseRepository,private  val context: Context
+@HiltViewModel
+class HistoryFragmentViewModel @Inject constructor (private  val repository: ExpenseRepository
 ): ViewModel() {
-    private val dataStore= CustomDataStore(context)
 
     fun getCurrentUserExpenses(userId:Int)=repository.getCurrentUserExpenses(userId)
     // fun checkUser(username:String,password:String)=repository.checkClient(username,password)
-    fun getId() :Int  {
+    fun getId( context:Context) :Int  {
+        val dataStore= CustomDataStore(context)
         val id :Int
         runBlocking {
             id= dataStore.readInt(context.getString(R.string.id))!!
@@ -24,6 +30,9 @@ class HistoryFragmentViewModel (private  val repository: ExpenseRepository,priva
 
     }
     suspend fun deleteExpense(expenseId:Int)= repository.deleteExpense(expenseId )
+     fun filterByPrice(userId: Int)=repository.filterByPrice(userId)
+    fun filterByCategory(userId: Int,category:String)=repository.filterByCategory(userId,category)
+
 
 
 }

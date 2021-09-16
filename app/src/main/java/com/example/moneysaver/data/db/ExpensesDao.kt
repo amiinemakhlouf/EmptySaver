@@ -15,6 +15,10 @@ interface ExpensesDao {
     fun getSumExpenses(userId: Int): LiveData<Double>
     @Query("delete from expense where id=:expenseId")
     fun deleteExpense(expenseId:Int)
+    @Query(" select * from expense where clientId=:userId order by value ")
+    fun filterByPrice(userId: Int):LiveData<MutableList<ExpenseModelClass>>
+    @Query(" select * from expense where clientId=:userId and category=:category ")
+    fun filterByCategory(userId: Int,category: String):LiveData<MutableList<ExpenseModelClass>>
 
 
 

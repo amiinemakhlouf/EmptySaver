@@ -7,22 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.R
+import com.example.moneysaver.data.db.ExpensesDao
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.databinding.FragmentMainBinding
 import com.example.moneysaver.databinding.MainFragment2Binding
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.utils.Category
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
-
+import javax.inject.Inject
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
+
+    private val viewModel: MainFragmentViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,21 +43,35 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val database = MoneySaverDatabase(requireContext())
-        val repository = ExpenseRepository(database)
-        val rep = ClientRepository(database)
-        val factory = MainFragmentViewModelFactory(repository, rep, requireContext())
-        val provider = ViewModelProvider(this, factory)
-        val viewModel = provider.get(MainFragmentViewModel::class.java)
 
-        categoryOnClickListener(binding.expensesPerDay,viewModel,Category.Daily.coeff,Category.Daily.name)
-        categoryOnClickListener(binding.expensesPerMonth,viewModel,Category.Monthly.coeff,Category.Monthly.name)
-        categoryOnClickListener(binding.expensesPerWeek,viewModel,Category.Weekly.coeff,Category.Weekly.name)
-        categoryOnClickListener(binding.variousExpenses,viewModel,Category.Various.coeff,Category.Various.name)
+        categoryOnClickListener(
+            binding.expensesPerDay,
+            viewModel,
+            Category.Daily.coeff,
+            Category.Daily.name
+        )
+        categoryOnClickListener(
+            binding.expensesPerMonth,
+            viewModel,
+            Category.Monthly.coeff,
+            Category.Monthly.name
+        )
+        categoryOnClickListener(
+            binding.expensesPerWeek,
+            viewModel,
+            Category.Weekly.coeff,
+            Category.Weekly.name
+        )
+        categoryOnClickListener(
+            binding.variousExpenses,
+            viewModel,
+            Category.Various.coeff,
+            Category.Various.name
+        )
         showRemainingMoney(
-            viewModel.getSalary(viewModel.getId()),
-            viewModel.getSumExpenses(viewModel.getId()),
-            viewModel.getSalaryLimit(viewModel.getId()),
+            viewModel.getSalary(viewModel.getId(requireContext())),
+            viewModel.getSumExpenses(viewModel.getId(requireContext())),
+            viewModel.getSalaryLimit(viewModel.getId(requireContext())),
             binding.RemainingMoney
         )
 
@@ -97,15 +118,21 @@ class MainFragment : Fragment() {
 
 
     }
-    fun categoryOnClickListener(view:View,viewModel:MainFragmentViewModel,coef:Int,name:String){
+
+    fun categoryOnClickListener(
+        view: View,
+        viewModel: MainFragmentViewModel,
+        coef: Int,
+        name: String
+    ) {
         this.lifecycleScope.launch(Dispatchers.Main) {
             view.setOnClickListener {
-                viewModel.alertDialog()
+                viewModel.alertDialog(requireContext())
 
-                viewModel.alertDialog().showCustomAlertDialog(
-                    viewModel.getId(),
+                viewModel.alertDialog(requireContext()).showCustomAlertDialog(
+                    viewModel.getId(requireContext()),
                     viewModel,
-                     coef        ,
+                    coef,
                     name,
                     getString(R.string.expenses),
                     getString(R.string.title),
@@ -118,11 +145,7 @@ class MainFragment : Fragment() {
         }
 
 
-
     }
-
-
-
 
 
 }

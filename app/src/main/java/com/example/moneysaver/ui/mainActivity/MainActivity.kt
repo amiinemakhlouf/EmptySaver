@@ -14,8 +14,9 @@ import com.example.moneysaver.ui.HistoryFragment.HistoryFragment
 import com.example.moneysaver.ui.mainfragment.MainFragment
 import com.example.moneysaver.utils.LogOutAlertDialog
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var logOutAlertDialog: LogOutAlertDialog

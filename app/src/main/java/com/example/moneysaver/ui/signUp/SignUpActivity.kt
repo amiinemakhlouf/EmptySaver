@@ -3,40 +3,31 @@ package com.example.moneysaver.ui.signUp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.R
 import com.example.moneysaver.ui.mainActivity.MainActivity
-import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 import com.example.moneysaver.databinding.ActivitySignUpBinding
-import com.example.moneysaver.repostories.ClientRepository
-import com.example.moneysaver.ui.signIn.SignInViewModel
-import com.example.moneysaver.ui.signIn.SignInViewModelFactory
 import com.example.moneysaver.utils.CheckInputs
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var checkInputs: CheckInputs
     private lateinit var customDataStore: CustomDataStore
+    private  val viewModel:SignUpViewModel by viewModels ()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         customDataStore = CustomDataStore(this)
-        val database = MoneySaverDatabase(this)
-        val repository = ClientRepository(database)
-        val factory = SignUpViewModelFactory(repository)
-        val provider = ViewModelProvider(this, factory)
-        val viewModel = provider.get(SignUpViewModel::class.java)
 
         checkInputs = CheckInputs()
         binding.btSignUp.setOnClickListener {

@@ -19,14 +19,17 @@ import com.example.moneysaver.ui.mainActivity.MainActivity
 import com.example.moneysaver.ui.signIn.SignInActivity
 import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class SplashActivityViewModel(private val context: Activity) : ViewModel() {
+@HiltViewModel
+class SplashActivityViewModel @Inject constructor() : ViewModel() {
 
-    fun getId(): Int {
+    fun getId(context: Context): Int {
         var id: Int = -1
         runBlocking {
             if (CustomDataStore(context).readInt(context.getString(R.string.id)) != null)
@@ -37,16 +40,16 @@ class SplashActivityViewModel(private val context: Activity) : ViewModel() {
 
     }
 
-    fun goToMainActivity() {
+    fun goToMainActivity(context: Context) {
         context.startActivity(Intent(context, MainActivity::class.java))
 
     }
 
-    fun goToSignInActivity() {
+    fun goToSignInActivity(context: Context) {
         context.startActivity(Intent(context, SignInActivity::class.java))
     }
 
-    fun hideSystemUI(binding: ActivitySplashBinding) {
+    fun hideSystemUI(binding: ActivitySplashBinding,context: Activity) {
         WindowCompat.setDecorFitsSystemWindows(context.window, false)
         WindowInsetsControllerCompat(context.window, binding.root).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
@@ -60,17 +63,17 @@ class SplashActivityViewModel(private val context: Activity) : ViewModel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             context.window.insetsController?.hide(WindowInsets.Type.statusBars())
         }
-        hideSystemUI(binding)
+        hideSystemUI(binding,context)
 
 
 
         Handler(Looper.getMainLooper()).postDelayed({
             viewModelScope.launch {
 
-                if (userConnected(this@SplashActivityViewModel.getId())) {
-                    this@SplashActivityViewModel.goToMainActivity()
+                if (userConnected(this@SplashActivityViewModel.getId(context))) {
+                    this@SplashActivityViewModel.goToMainActivity(context)
                 } else {
-                    this@SplashActivityViewModel.goToSignInActivity()
+                    this@SplashActivityViewModel.goToSignInActivity(context)
                 }
 
             }

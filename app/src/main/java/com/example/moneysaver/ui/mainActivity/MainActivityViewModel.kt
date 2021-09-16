@@ -2,8 +2,12 @@ package com.example.moneysaver.ui.mainActivity
 
 import androidx.lifecycle.ViewModel
 import com.example.moneysaver.repostories.ClientRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-class MainActivityViewModel (private  val repository: ClientRepository
+@HiltViewModel
+class MainActivityViewModel @Inject constructor (private  val repository: ClientRepository
 ): ViewModel() {
 
     fun getCurrentUserData(userId:Int)=repository.getCurrentUserData(userId)

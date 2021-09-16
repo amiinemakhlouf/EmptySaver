@@ -26,9 +26,13 @@
 
     <string name="weekly">Weekly</string>
     <string name="various_pascal_case">Various</string>
-
+    <string-array name="filter_option">
+        <item> category </item>
+        <item>  price  </item>
+    </string-array>
 
     <string name="sign_in">SIGN IN</string>
+    <string name="category">SIGN IN</string>
     <string name="create_an_account">create an account</string>
     <string name="salary">Salary</string>
     <string name="limit_salary">limit salary</string>

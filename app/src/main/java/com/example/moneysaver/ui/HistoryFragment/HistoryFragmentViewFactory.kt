@@ -7,8 +7,8 @@ import com.example.moneysaver.data.room_repostories.ExpenseRepository
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.ui.mainActivity.MainActivityViewModel
 
-class HistoryFragmentViewFactory (private val repository: ExpenseRepository,private val context: Context): ViewModelProvider.NewInstanceFactory(){
+class HistoryFragmentViewFactory (private val repository: ExpenseRepository): ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return HistoryFragmentViewModel( repository,context) as T
+        return HistoryFragmentViewModel( repository) as T
     }
 }

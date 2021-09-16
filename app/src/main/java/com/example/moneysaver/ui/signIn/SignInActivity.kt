@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -18,11 +19,13 @@ import com.example.moneysaver.databinding.ActivitySignInBinding
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.ui.signUp.SignUpActivity
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var customDataStore: CustomDataStore
+    private  val viewModel:SignInViewModel by  viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
@@ -32,11 +35,6 @@ class SignInActivity : AppCompatActivity() {
             intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
-        val database = MoneySaverDatabase(this)
-        val repository = ClientRepository(database)
-        val factory = SignInViewModelFactory(repository)
-        val provider = ViewModelProvider(this, factory)
-        val viewModel = provider.get(SignInViewModel::class.java)
 
         binding.btSignIn.setOnClickListener {
 

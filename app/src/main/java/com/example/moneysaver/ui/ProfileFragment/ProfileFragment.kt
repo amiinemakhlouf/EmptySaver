@@ -7,24 +7,28 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import com.example.moneysaver.utils.Constants
 import com.example.moneysaver.R
+import com.example.moneysaver.data.db.ExpensesDao
 import com.example.moneysaver.data.db.MoneySaverDatabase
 import com.example.moneysaver.data.db.entities.ClientModelClass
 import com.example.moneysaver.databinding.FragmentProfileBinding
 import com.example.moneysaver.repostories.ClientRepository
 import com.example.moneysaver.ui.signIn.SignInActivity
 import com.example.moneysaver.utils.CustomDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private lateinit var dataStore: CustomDataStore
     private lateinit var binding:FragmentProfileBinding
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,11 +43,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataStore= CustomDataStore(requireContext())
-        val database = MoneySaverDatabase(requireContext())
-        val repository = ClientRepository(database)
-        val factory = ProfileViewModelFactory(repository)
-        val provider = ViewModelProvider(this,factory)
-        val viewModel = provider.get(ProfileViewModel::class.java)
 
         lifecycleScope.launch {
             val id1 = dataStore.readInt(getString(R.string.id))
