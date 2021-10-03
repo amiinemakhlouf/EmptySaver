@@ -15,6 +15,8 @@ import com.example.moneysaver.databinding.ItemsBinding
 import com.example.moneysaver.utils.DeleteItemDialog
 import com.example.moneysaver.utils.ExpenseAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment(),ExpenseAdapter.OnExpenseItemClickListener {
@@ -37,8 +39,7 @@ class HistoryFragment : Fragment(),ExpenseAdapter.OnExpenseItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         val dataSet= mutableListOf<ExpenseModelClass>()
         initRecyclerView(dataSet,this,viewModel)
-
-
+        val id=viewModel.getId(requireContext())
         viewModel.getCurrentUserExpenses(viewModel.getId(requireContext())).observe(viewLifecycleOwner,{
             expenseAdapter.dataSEt=it
             expenseAdapter.notifyDataSetChanged()

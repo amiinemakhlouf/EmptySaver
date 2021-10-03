@@ -13,7 +13,8 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private  val repository: ClientRepository
 ):ViewModel() {
-    fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.Main).launch{
+    fun upsert(item:ClientModelClass)= CoroutineScope(Dispatchers.IO
+    ).launch{
         repository.upsert(item)}
     fun checkClient(username:String,password:String)=  repository.checkClient(username,password)
 
